@@ -5,12 +5,20 @@ import Card from "./Card";
 import { animals, birds } from "./animalsList";
 
 function App() {
-  const [animalsList, setAnimals] = useState(animals.concat(birds));
+  const [animalsList, setAnimals] = useState(animals);
+  //const [animalsList, setAnimals] = useState(animals.concat(birds));
   console.log(animalsList);
+
+  const [search, setSearch] = useState("");
+  console.log(search);
 
   const removeCard = (name) => {
     const updateArray = animalsList.filter((animal) => animal.name !== name);
     setAnimals(updateArray);
+  };
+
+  const searchHandler = (event) => {
+    setSearch(event.target.value);
   };
 
   // const heartIcon = (likes) => {
@@ -55,7 +63,13 @@ function App() {
       return { name: animal.name, likes: animal.likes };
     });
     setAnimals(updatedArray);
-    console.log(updatedArray);
+    // console.log(updatedArray);
+  };
+
+  const searchRes = (filteredAnimalsList) => {
+    if (filteredAnimalsList.length === 0) {
+      return "Not found";
+    }
   };
 
   return (
@@ -63,18 +77,22 @@ function App() {
       <Header />
       <main>
         <h1>Animals</h1>
+        <input type="text" onChange={searchHandler} />
         <div className="cards">
-          {animalsList.map((animal) => (
-            <Card
-              key={animal.name}
-              title={animal.name}
-              likes={animal.likes}
-              click={() => removeCard(animal.name)}
-              likesupdate={() => likesCounter(animal.name, "add")}
-              dislikeupdate={() => likesCounter(animal.name, "remove")}
-              // icon={() => heartIcon(animal.likes)}
-            />
-          ))}
+          {animalsList
+            .filter((animal) =>
+              animal.name.toLowerCase().includes(search.toLowerCase())
+            )
+            .map((animal) => (
+              <Card
+                key={animal.name}
+                title={animal.name}
+                likes={animal.likes}
+                click={() => removeCard(animal.name)}
+                likesupdate={() => likesCounter(animal.name, "add")}
+                dislikeupdate={() => likesCounter(animal.name, "remove")}
+              />
+            ))}
         </div>
       </main>
       <Footer />

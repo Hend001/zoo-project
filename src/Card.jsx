@@ -14,7 +14,6 @@ function Card(props) {
         <span class="material-symbols-outlined">
           {props.likes < 0 ? "heart_broken" : "favorite"}
         </span>
-
         <button onClick={props.likesupdate}>+</button>
       </div>
     </div>
