@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
-import Card from "./Card";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Card from "./components/Card";
 import { animals, birds } from "./animalsList";
 
 function App() {
@@ -56,20 +56,14 @@ function App() {
   const likesCounter = (animalsData, events) => {
     const updatedArray = animalsList.map((animal) => {
       if (animal.name == animalsData && events === "add") {
-        return { name: animal.name, likes: animal.likes + 1 };
+        return { ...animal, likes: animal.likes + 1 };
       } else if (animal.name == animalsData && events === "remove") {
-        return { name: animal.name, likes: animal.likes - 1 };
+        return { ...animal, likes: animal.likes - 1 };
       }
       return { name: animal.name, likes: animal.likes };
     });
     setAnimals(updatedArray);
     // console.log(updatedArray);
-  };
-
-  const searchRes = (filteredAnimalsList) => {
-    if (filteredAnimalsList.length === 0) {
-      return "Not found";
-    }
   };
 
   return (
